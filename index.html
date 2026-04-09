@@ -379,6 +379,21 @@
         .agent-msg-l { align-self: flex-start; background: var(--surface-2); border-bottom-left-radius: 4px; }
         .agent-msg-r { align-self: flex-end; background: #3b0a2a; border-bottom-right-radius: 4px; }
 
+        .agent-match-banner {
+            margin: 0.75rem 1.25rem 1.25rem; padding: 0.85rem 1rem;
+            border-radius: 14px; display: flex; align-items: center; gap: 0.75rem;
+            background: linear-gradient(135deg, rgba(237, 21, 114, 0.15), rgba(237, 21, 114, 0.05));
+            border: 1px solid rgba(237, 21, 114, 0.3);
+            animation: matchGlow 2s ease-in-out infinite;
+        }
+        @keyframes matchGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(237, 21, 114, 0.1); }
+            50% { box-shadow: 0 0 25px rgba(237, 21, 114, 0.25); }
+        }
+        .agent-match-icon { flex-shrink: 0; }
+        .agent-match-title { font-weight: 700; font-size: 0.9rem; color: var(--accent); }
+        .agent-match-sub { font-size: 0.75rem; color: var(--text-dim); }
+
         .agent-footnote {
             text-align: center; color: var(--text-dim); font-size: 0.9rem;
             margin-top: 2.5rem; line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto;
@@ -768,6 +783,15 @@
                     <div class="agent-msg agent-msg-r">Portra 400 is my go-to, but honestly lately I've been experimenting with expired film — the unpredictable colors are kinda the point</div>
                     <div class="agent-msg agent-msg-l">Omg same. The best shots are always accidents</div>
                     <div class="agent-msg agent-msg-r">Exactly! Like skateboarding — best tricks happen when you stop trying. What else are you into?</div>
+                </div>
+                <div class="agent-match-banner">
+                    <div class="agent-match-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 18s-7-4.35-7-9.5A4.5 4.5 0 0110 4a4.5 4.5 0 017 4.5c0 5.15-7 9.5-7 9.5z" fill="#ed1572"/></svg>
+                    </div>
+                    <div>
+                        <div class="agent-match-title">It's a match!</div>
+                        <div class="agent-match-sub">Both agents vibed. Daniel & Anna should meet.</div>
+                    </div>
                 </div>
             </div>
         </div>
