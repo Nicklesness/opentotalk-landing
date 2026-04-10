@@ -99,6 +99,52 @@
             max-width: 520px; line-height: 1.7; margin-bottom: 2.5rem; position: relative; z-index: 2;
         }
 
+        /* Hero CTA */
+        .hero-cta-wrap {
+            position: relative; z-index: 2; display: flex; flex-direction: column;
+            align-items: center; gap: 1rem; margin-bottom: 2.5rem;
+        }
+        .hero-join-btn {
+            padding: 1rem 3rem; border-radius: 100px; border: none;
+            background: var(--accent); color: white; font-size: 1.1rem; font-weight: 700;
+            font-family: inherit; cursor: pointer; letter-spacing: 0.01em;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 25px var(--accent-glow);
+        }
+        .hero-join-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 40px var(--accent-glow);
+        }
+        .hero-join-form {
+            display: flex; gap: 0.5rem; padding: 0.4rem;
+            border-radius: 16px; background: var(--surface); border: 1px solid var(--border);
+            width: 100%; max-width: 420px;
+        }
+        .hero-join-form input {
+            flex: 1; padding: 0.9rem 1.1rem; border: none; background: transparent;
+            color: var(--text); font-size: 0.95rem; font-family: inherit; outline: none;
+        }
+        .hero-join-form input::placeholder { color: #52525b; }
+        .hero-join-form button {
+            padding: 0.9rem 1.75rem; border-radius: 12px; border: none; background: var(--accent);
+            color: white; font-size: 0.9rem; font-weight: 600; font-family: inherit;
+            cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .hero-join-form button:hover { transform: translateY(-1px); box-shadow: 0 8px 30px var(--accent-glow); }
+
+        .hero-social-proof {
+            display: flex; align-items: center; gap: 0.75rem;
+            font-size: 0.85rem; color: var(--text-dim);
+        }
+        .hero-avatars {
+            display: flex;
+        }
+        .hero-avatars img {
+            width: 28px; height: 28px; border-radius: 50%; object-fit: cover;
+            border: 2px solid var(--bg); margin-left: -8px;
+        }
+        .hero-avatars img:first-child { margin-left: 0; }
+
         /* Hero phones */
         .hero-phones {
             display: flex; gap: 1.5rem; justify-content: center; align-items: flex-start;
@@ -645,6 +691,21 @@
             Your AI agent meets people for you — for any reason. You just read and choose.
         </p>
 
+        <div class="hero-cta-wrap" id="waitlist">
+            <button class="hero-join-btn" id="heroJoinBtn">Join now</button>
+            <form class="hero-join-form" id="heroJoinForm" style="display:none">
+                <input type="email" name="email" placeholder="Your email" required>
+                <button type="submit">Join waitlist</button>
+            </form>
+            <div class="success-msg" id="heroSuccess" style="display:none">You're in! We'll let you know when we launch.</div>
+            <div class="hero-social-proof">
+                <div class="hero-avatars">
+                    <img src="images/person_1.png" alt=""><img src="images/person_6.png" alt=""><img src="images/person_4.png" alt=""><img src="images/person_3.png" alt="">
+                </div>
+                <span>1,000+ people already joined</span>
+            </div>
+        </div>
+
         <!-- Hero phones -->
         <div class="hero-phones reveal">
             <div class="phone hero-phone-1">
@@ -751,13 +812,6 @@
             </div>
         </div>
 
-        <div class="cta-wrap" id="waitlist">
-            <form class="cta-form" id="heroForm">
-                <input type="email" name="email" placeholder="Your email" required>
-                <button type="submit">Join waitlist</button>
-            </form>
-            <div class="success-msg" id="heroSuccess">You're in! We'll let you know when we launch.</div>
-        </div>
     </section>
 
     <!-- Marquee -->
@@ -1125,7 +1179,24 @@
                 success.style.display = 'block';
             });
         }
-        setupForm('heroForm', 'heroSuccess');
+        // Hero join button -> form
+        const heroBtn = document.getElementById('heroJoinBtn');
+        const heroForm = document.getElementById('heroJoinForm');
+        const heroSuccess = document.getElementById('heroSuccess');
+        heroBtn.addEventListener('click', () => {
+            heroBtn.style.display = 'none';
+            heroForm.style.display = 'flex';
+            heroForm.querySelector('input').focus();
+        });
+        heroForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = heroForm.querySelector('input').value;
+            const list = JSON.parse(localStorage.getItem('opentotalk_waitlist') || '[]');
+            list.push({ email, ts: new Date().toISOString() });
+            localStorage.setItem('opentotalk_waitlist', JSON.stringify(list));
+            heroForm.style.display = 'none';
+            heroSuccess.style.display = 'block';
+        });
         setupForm('bottomForm', 'bottomSuccess');
     </script>
 
